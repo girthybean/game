@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -74,13 +75,18 @@ public class GameService {
         if (!question.getAnswer().equalsIgnoreCase(answer.answer())) {
             throw new WrongAnswerException("Wrong answer: " + answer.answer());
         }
+        TeamAnswer teamAnswer = createTeamAnswer(question, game, team);
+        TeamAnswer saved = teamAnswerRepository.save(teamAnswer);
+        game.getAnswers().add(saved);
+        return teamAnswerMapper.convertToDto(saved);
+    }
+
+    private static @NonNull TeamAnswer createTeamAnswer(Question question, Game game, Team team) {
         TeamAnswer teamAnswer = new TeamAnswer();
         teamAnswer.setIsDone(true);
         teamAnswer.setQuestion(question);
         teamAnswer.setGame(game);
         teamAnswer.setTeam(team);
-        TeamAnswer saved = teamAnswerRepository.save(teamAnswer);
-        game.getAnswers().add(saved);
-        return teamAnswerMapper.convertToDto(saved);
+        return teamAnswer;
     }
 }
