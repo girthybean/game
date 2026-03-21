@@ -1,16 +1,15 @@
 services:
-  mariadb:
-    image: mariadb:latest
-    container_name: mariadb-server
-    environment:
-      MYSQL_ROOT_PASSWORD: "secret"
-      MYSQL_DATABASE: "mydatabase"
-      MYSQL_USER: "user"
-      MYSQL_PASSWORD: "secret"
+  postgres:
+    image: 'postgres:bullseye'
+    container_name: 'game-db'
     ports:
-      - "3306:3306"
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'password'
+      POSTGRES_DB: postgres
     volumes:
-      - mariadb-data:/var/lib/mysql
+      - postgres-data:/var/lib/postgresql/data
 
 volumes:
-  mariadb-data:
+  postgres-data:

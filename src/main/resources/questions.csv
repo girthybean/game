@@ -1,0 +1,11 @@
+answer,hint,question
+algorithm,"It is a step-by-step way to solve a problem.","What do we call a step-by-step set of instructions for solving a problem?"
+binary,"Computers use this number system with only 0 and 1.","What number system do computers use at the lowest level?"
+cpu,"It is often called the brain of the computer.","Which part of a computer processes instructions and performs calculations?"
+ram,"It stores data only while the computer is turned on.","What kind of memory is used for temporary working data?"
+input,"A keyboard and mouse are examples of this type of device action.","What do we call data sent into a computer?"
+output,"A monitor and printer show the results of computer work.","What do we call data a computer sends back to the user?"
+variable,"In programming, it is a named place to store a value.","What do we call a storage location in code that can hold changing data?"
+loop,"It repeats the same block of code multiple times.","What programming structure is used to repeat instructions?"
+debugging,"Programmers do this to find and fix errors in code.","What is the process of finding and fixing mistakes in a program called?"
+database,"It stores organized information that can be searched and updated.","What do we call a system used to store and manage large amounts of data?"
