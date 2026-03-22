@@ -2,6 +2,7 @@ package com.appsflyer.game.mapper;
 
 import com.appsflyer.game.dto.TeamAnswerDTO;
 import com.appsflyer.game.entities.TeamAnswer;
+import java.util.List;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
@@ -10,5 +11,10 @@ import org.mapstruct.MappingConstants;
     uses = {QuestionMapper.class, TeamMapper.class, GameMapper.class},
     injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface TeamAnswerMapper {
+
     TeamAnswerDTO convertToDto(TeamAnswer teamAnswer);
+
+    List<TeamAnswerDTO> convertToDto(List<TeamAnswer> teamAnswer);
+
+    
 }

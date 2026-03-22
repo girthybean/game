@@ -6,7 +6,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,11 +23,8 @@ public class TeamAnswer {
     @Column(name = "is_done", nullable = false)
     private Boolean isDone;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Question question;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    private Team team;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Game game;

@@ -19,7 +19,9 @@ import com.appsflyer.game.repository.TeamRepository;
 import jakarta.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Service;
@@ -47,9 +49,9 @@ public class GameService {
     }
 
     @Transactional
-    public GameDTO startGame(String teamName) {
-        Team team = teamRepository.findByNameLike(teamName.toLowerCase())
-            .orElseThrow(() -> new NoSuchElementException(teamName));
+    public GameDTO startGame(Long teamId) {
+        Team team = teamRepository.findById(teamId)
+            .orElseThrow(() -> new NoSuchElementException(teamId.toString()));
         Game existing = gameRepository.findGameByTeam(team)
             .orElse(null);
         if (existing != null) {
@@ -78,7 +80,17 @@ public class GameService {
         TeamAnswer teamAnswer = createTeamAnswer(question, game, team);
         TeamAnswer saved = teamAnswerRepository.save(teamAnswer);
         game.getAnswers().add(saved);
+        team.getAnswers().add(saved);
         return teamAnswerMapper.convertToDto(saved);
+    }
+
+    public List<TeamAnswerDTO> teamStats(Long teamId) {
+        Team team = teamRepository.findById(teamId)
+            .orElseThrow(() -> new NoSuchElementException(teamId.toString()));
+        Game game = gameRepository.findGameByTeam(team)
+            .orElseThrow();
+        List<TeamAnswer> answers = game.getAnswers();
+        return teamAnswerMapper.convertToDto(answers);
     }
 
     private static @NonNull TeamAnswer createTeamAnswer(Question question, Game game, Team team) {
@@ -86,7 +98,13 @@ public class GameService {
         teamAnswer.setIsDone(true);
         teamAnswer.setQuestion(question);
         teamAnswer.setGame(game);
-        teamAnswer.setTeam(team);
         return teamAnswer;
+    }
+
+    public Map<Long, List<TeamAnswerDTO>> gameTotal() {
+
+        return teamAnswerMapper.convertToDto(teamAnswerRepository.findAll())
+            .stream()
+            .collect(Collectors.groupingBy(teamAnswerDTO -> teamAnswerDTO.game().team().id()));
     }
 }
