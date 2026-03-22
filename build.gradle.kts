@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.bundling.BootJar
+
 plugins {
     java
     id("org.springframework.boot") version "4.0.3"
@@ -5,7 +7,7 @@ plugins {
 }
 
 group = "com.appsflyer"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.1"
 description = "game"
 
 java {
@@ -43,4 +45,8 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.withType<BootJar> {
+    archiveClassifier = "boot"
 }
